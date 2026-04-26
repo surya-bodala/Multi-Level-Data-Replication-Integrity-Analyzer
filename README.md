@@ -1,76 +1,97 @@
-📊 Smart City Risk Analysis System
+📁 Data Replication & Integrity Analysis (Python)
 📌 Overview
 
-This project simulates a Smart City Monitoring System that analyzes different zones based on:
+This project demonstrates how different copying techniques in Python affect data integrity:
 
-Traffic levels 🚗
-Air quality 🌫️
-Energy consumption ⚡
+Assignment Copy
+Shallow Copy
+Deep Copy
 
-It classifies zones, calculates risk scores, detects patterns, and provides a final city-wide decision.
+It simulates a simple user data storage system and analyzes how modifications impact original data.
 
 ⚙️ Features
-🔢 Random data generation for multiple zones
-🧠 Risk classification using custom logic
-📊 Risk score calculation with weighted factors
-📈 Data analysis using NumPy and Pandas
-🔍 Pattern detection (multi-risk zones, clusters, stability)
-🏙️ Final city status evaluation
-🗂️ Data Fields
+📂 Simulates user file storage and usage
+🔁 Demonstrates assignment, shallow, and deep copying
+✏️ Modifies copied data based on logic
+🔍 Detects data corruption (leakage)
+📊 Generates integrity report
+🗂️ Data Structure
 
-Each zone contains:
+Each user contains:
 
-zone → Zone number
-traffic → Traffic level (0–100)
-air_quality → AQI (0–300)
-energy → Energy usage (0–500)
-🧮 Risk Classification Logic
-High Risk → Air quality > 200 OR traffic > 80
-Energy Critical → Energy > 400
-Safe Zone → Traffic < 30 AND air quality < 100
-Moderate → All other cases
-📐 Risk Score Formula
+id → User ID
+data →
+files → List of file names
+usage → Storage usage
 
-The system calculates a weighted risk score:
+Example:
 
-Risk Score = (0.3 × Traffic) + (0.4 × Air Quality) + (0.3 × Energy)
-🔍 Pattern Detection
+{
+  "id": 1,
+  "data": {
+    "files": ["a.txt", "b.txt"],
+    "usage": 500
+  }
+}
+🔁 Copy Types Explained
+1. Assignment Copy
+assign_copy = users
+No actual copy is created
+Both variables point to the same object
+⚠️ Changes affect original data
+2. Shallow Copy
+shallow = copy.copy(users)
+Copies outer structure only
+Inner objects (lists, dicts) are shared
+⚠️ Partial data corruption possible
+3. Deep Copy
+deep = copy.deepcopy(users)
+Fully independent copy
+No shared references
+✅ Safe from unintended changes
+✏️ Modification Logic
 
-The system identifies:
+Based on roll_no:
 
-Multi-factor Risk Zones → High risk score + increasing air quality
-Stability → Based on variance of traffic
-Clusters → Consecutive high-risk zones
-📊 Outputs
+If even → Add "user646_file.txt"
+If odd → Remove last file (if exists)
+Increase usage by +100
+🔍 Integrity Check
 
-The program prints:
+The system evaluates:
 
-Full city dataset
-Mean values of traffic, air quality, and energy
-Top 3 highest risk zones
-Risk statistics (max, mean, min)
-Pattern detection results
-Final decision on city condition
-🚦 Final Decision Logic
+Leakage Count → Differences between original & deep copy
+Safe Count → Unchanged data
+Overlap Count → Common files between original & deep copy
+📊 Output
 
-Based on average risk score:
+The program displays:
 
-< 100 → City Stable ✅
-100–150 → Moderate Risk ⚠️
-150–200 → High Alert 🚨
-> 200 → Critical Emergency 🔥
+Data before and after modification
+Comparison of all copy types
+Integrity report:
+Leakage
+Safe data
+Overlap
+
+Example:
+
+Result Tuple: (leakage, safe, overlap)
+🧪 Key Observation
+Assignment & shallow copy modify original data ❌
+Deep copy keeps original data intact ✅
 🧑‍💻 Requirements
 
-Install dependencies before running:
+No external libraries required (uses built-in copy module)
 
-pip install pandas numpy
 ▶️ How to Run
 python your_script_name.py
-🌍 Smart City Concept
+⚠️ Data Corruption Definition
 
-A smart city focuses on:
+Data corruption occurs when:
 
-🌱 Reducing pollution
-⚡ Efficient energy management
-📡 Data-driven decision making
-🌏 Sustainable urban development
+Original data changes unintentionally due to improper copying methods or shared references.
+
+📎 Notes
+This project is useful for understanding memory handling in Python
+Important for real-world applications like databases, caching, and backups
